@@ -17,15 +17,13 @@
 
 var grades = [15, 28];
 
-function addGrades (grades) {
+function addGrades(grades) {
 	grades.push(44);
 	debugger;
 
-	
+
 
 }
 
 addGrades(grades);
 console.log(grades);
-
-
