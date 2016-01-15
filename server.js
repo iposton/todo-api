@@ -41,9 +41,20 @@ app.get('/todos', function(req, res) {
 // Get request one todo
 app.get('/todos/:id', function(req, res) {
 	var todoId = parseInt(req.params.id, 10);
-	var matchedTodo = _.findWhere(todos, {
-		id: todoId
-	});
+
+  db.todo.findById(todoId).then(function(todo) {
+  	if (!!todo) {
+      res.json(todo.toJSON());
+  	} else {
+  		res.status(404).json({'error': 'there is no todo with the id of ' + todoId});
+  	}
+  }, function(e) {
+  	res.status(500).json({'error': 'server error'});
+  });
+
+	// var matchedTodo = _.findWhere(todos, {
+	// 	id: todoId
+	// });
 	// Iterate of todos array. find a match. ^ refactored with underscore above
 
 	// todos.forEach( function (todo) {
@@ -52,11 +63,11 @@ app.get('/todos/:id', function(req, res) {
 	// 	}
 	// });
 
-	if (matchedTodo) {
-		res.json(matchedTodo);
-	} else {
-		res.status(404).send();
-	}
+	// if (matchedTodo) {
+	// 	res.json(matchedTodo);
+	// } else {
+	// 	res.status(404).send();
+	// }
 
 });
 // Post 
