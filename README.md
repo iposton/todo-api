@@ -1,5 +1,5 @@
 #<a href="#">Node Todo</a> - Rest API 
-<a href="https://codeclimate.com/github/iposton/todo-api"><img src="https://codeclimate.com/github/iposton/todo-api/badges/gpa.svg" /></a>><br>
+<a href="https://codeclimate.com/github/iposton/todo-api"><img src="https://codeclimate.com/github/iposton/todo-api/badges/gpa.svg" /></a><br>
 This app is an example of server-side javascript. It uses <a href="http://www.getpostman.com/" target="_blank">Postman</a> to process GET, POST, DELETE, and PUT todos.
 
 
