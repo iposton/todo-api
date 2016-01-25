@@ -67,7 +67,12 @@ app.post('/todos', middleware.requireAuthentication, function(req, res) {
 	var body = _.pick(req.body, 'description', 'completed');
 
 	db.todo.create(body).then(function(todo) {
-		res.json(todo.toJSON());
+		req.user.addTodo(todo).then(function() {
+			return todo.reload();
+		}).then(function(todo) {
+			res.json(todo.toJSON());
+		});
+
 	}, function(e) {
 		res.status(400).json(e);
 	});
@@ -150,15 +155,21 @@ app.post('/users/login', function(req, res) {
 		if (token) {
 			res.header('Auth', token).json(user.toPublicJSON());
 		} else {
-			res.status(401).json({'error': 'the credentials are incorrect'});
+			res.status(401).json({
+				'error': 'the credentials are incorrect'
+			});
 		}
-		
+
 	}, function() {
-		res.status(401).json({'error': 'the credentials are incorrect'});
+		res.status(401).json({
+			'error': 'the credentials are incorrect'
+		});
 	});
 });
 
-db.sequelize.sync().then(function() {
+db.sequelize.sync({
+	//force: true
+}).then(function() {
 	app.listen(PORT, function() {
 		console.log('Express listening on ' + PORT + '!');
 	});
